@@ -27,7 +27,7 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', "2021.0.3")
+    set('springCloudVersion', "2021.0.4")
 }
 
 dependencies {
@@ -40,12 +40,6 @@ dependencies {
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-
-    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
-
-    // kafka
-    implementation 'org.springframework.kafka:spring-kafka'
 
     // hikari - connection pool 보완 (enterprise 환경용)
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
@@ -60,12 +54,22 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
     // swagger
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
-    implementation 'io.springfox:springfox-swagger2:3.0.0'
-    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+//    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+//    implementation 'io.springfox:springfox-swagger2:3.0.0'
+//    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+    // 암호화
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+
+    // spring cloud
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.1.4'
 
     // spring cloud openfeign
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.4'
+
+    // kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+
 }
 
 dependencyManagement {
@@ -73,6 +77,11 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
 
 tasks.named('test') {
     useJUnitPlatform()

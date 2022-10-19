@@ -13,6 +13,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: 2022pmds-backend-catalog
   datasource:
