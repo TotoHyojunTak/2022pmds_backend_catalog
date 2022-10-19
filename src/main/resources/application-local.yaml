@@ -7,16 +7,19 @@ server:
       charset: UTF-8
   tomcat:
     uri-encoding: UTF-8
-  port: 0
+  port: 9996
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
   application:
     name: 2022pmds-backend-catalog
   datasource:
-    url: jdbc:log4jdbc:mariadb://146.56.114.57:3306/2022pmds
+    url: ENC(13ma2zTXalegMYDkm7mG0O3s53OaPmNHM6PXcJe92p7i/gxMf+rHrXOOQOo+teeZLknm9c9qVZ14PrZ5Mna4Ug==)
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    username: 2022pmds
-    password: 1q2w3e4r!@
+    username: ENC(x4mx2vNfvCl8LRVLdhD1vnq00h/m2ig/)
+    password: ENC(USXI9gBBura6foVPrDdr2QVLNYSeMsjk)
   jpa:
     hibernate:
       ddl-auto: update
@@ -37,14 +40,6 @@ spring:
 #        web-allow-others: true
 #      path: /h2-console
 
-eureka:
-  instance:
-    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
 
 jasypt:
   encryptor:
@@ -53,4 +48,56 @@ jasypt:
 
 logging:
   level:
-    com.ecom.catalogservice: DEBUG
+    com.pmds.catalog: DEBUG
+
+#########################################################
+#### Actuator
+#########################################################
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: never
+    shutdown:
+      enabled: true
+    caches:
+      enabled: false
+
+info:
+  organization:
+    name: thj0309
+  contact:
+    email: thj0309@hotmail.com
+
+#########################################################
+#### swagger
+#########################################################
+swagger:
+  base:
+    path: com.pmds.catalog
+
+#########################################################
+#### kafka
+#########################################################
+kafka:
+  bootstrap:
+    servers:
+      config: 127.0.0.1:9092
+  group:
+    id:
+      config: consumerGroupId
+
+#########################################################
+#### Eureka client
+#########################################################
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}

@@ -1,4 +1,4 @@
-package com.backend.order.order.config;
+package com.pmds.catalog.config;
 
 import com.fasterxml.classmate.TypeResolver;
 import io.swagger.annotations.ApiModel;
@@ -54,8 +54,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Template API")
-                .description("Template API")
+                .title("Catalog API")
+                .description("Catalog API")
                 .version("1.0")
                 .build();
     }

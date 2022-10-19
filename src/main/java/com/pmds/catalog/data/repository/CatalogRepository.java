@@ -1,12 +1,13 @@
-package com.backend.order.order.data.repository;
+package com.pmds.catalog.data.repository;
 
 
-import com.backend.order.order.data.entity.OrderEntity;
+import com.pmds.catalog.data.entity.CatalogEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
-public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
-    OrderEntity findByOrderId(String orderId);
-    List<OrderEntity> findByUserId(String userId);
+@Repository
+public interface CatalogRepository extends JpaRepository<CatalogEntity, Long> {
+    Optional<CatalogEntity> findByProductId(String productId);
 }
