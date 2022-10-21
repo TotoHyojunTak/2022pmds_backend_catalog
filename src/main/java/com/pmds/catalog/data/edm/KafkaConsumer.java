@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import javax.xml.catalog.Catalog;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -28,30 +26,32 @@ public class KafkaConsumer {
         log.info("kafka msg : " + kafkaMessage);
 
         // 역직렬화
-        Map<Object, Object> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
         try{
-            map = mapper.readValue(kafkaMessage, new TypeReference<Map<Object, Object>>() {
+            map = mapper.readValue(kafkaMessage, new TypeReference<Map<String, String>>() {
             });
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
-        Optional<CatalogEntity> entity = repository.findByProductId((String)map.get("productId"));
+        Optional<CatalogEntity> entity = repository.findByProductId(map.get("productId"));
 
         log.debug("entity ===> {}" + entity.toString());
         if(!((String) map.get("productId")).isEmpty() && map.get("productId") != null){
             if(entity.isEmpty()){
                 CatalogEntity temp = new CatalogEntity(
-                        (String) map.get("produceId")
+                        (String) map.get("productId")
                         , "unmapped-sku"
-                        , -(Integer) map.get("qty")
-                        , (Integer) map.get("unitPrice")
+                        , Integer.parseInt(map.get("qty")) * -1
+                        ,  Integer.parseInt(map.get("unitPrice"))
                 );
                 repository.save(temp);
             } else {
                 CatalogEntity temp = entity.get();
-                temp.setStock(temp.getStock() - (Integer) map.get("qty"));
+                temp.setStock(temp.getStock() - Integer.parseInt(map.get("qty")));
+                temp.setUnitPrice(Integer.parseInt(map.get("unitPrice")));
                 repository.save(temp);
             }
         }
