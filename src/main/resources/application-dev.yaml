@@ -62,7 +62,7 @@ management:
         include: "*"
   endpoint:
     health:
-      show-details: never
+      show-details: always
     shutdown:
       enabled: true
     caches:

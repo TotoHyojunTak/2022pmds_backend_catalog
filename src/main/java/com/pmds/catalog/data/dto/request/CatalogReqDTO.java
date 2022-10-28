@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class CatalogReqDTO {
     private String productId;
-    private Integer qty;
+     private String productName;
+    private Integer stock;
     private Integer unitPrice;
     private Integer totalPrice;
 

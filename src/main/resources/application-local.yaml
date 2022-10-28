@@ -18,7 +18,8 @@ spring:
   application:
     name: 2022pmds-backend-catalog
   datasource:
-    url: ENC(g437rCfr5zATthzw1pV4KIu6JHel8i92P2Za8eB7SZinZdBWpdmSCvhAzAsms7QNg3RebumRkEp+6fYXPpQ4zw==)
+    #url: ENC(g437rCfr5zATthzw1pV4KIu6JHel8i92P2Za8eB7SZinZdBWpdmSCvhAzAsms7QNg3RebumRkEp+6fYXPpQ4zw==)
+    url: jdbc:log4jdbc:mariadb://localhost:3306/catalog
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: ENC(/oBQaPYpBk9eL/FaOIOpvQ==)
     password: ENC(Qf2mstC0Tt0P/3sOcqP6dTnMGju4CB7E)
@@ -62,7 +63,7 @@ management:
         include: "*"
   endpoint:
     health:
-      show-details: never
+      show-details: always
     shutdown:
       enabled: true
     caches:
